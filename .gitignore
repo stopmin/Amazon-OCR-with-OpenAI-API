@@ -38,3 +38,8 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+### secret ###
+application-secret.yml
+application-secret.properties
+*.p12
