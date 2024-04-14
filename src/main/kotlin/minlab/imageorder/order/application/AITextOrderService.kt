@@ -24,8 +24,8 @@ class AITextOrderService(
     ): GptOrderResponseDTO {
 
         val content = """
-  너는 트럭 운송 플랫폼을 운영하는 상담원이다.
-  트럭 운송에 대한 정보를 채팅을 통해 제공받으면, 정해진 json 형식에 맞게 데이터를 출력한다.
+  너는 배달 플랫폼을 운영하는 상담원이다.
+  배달 운송에 대한 정보를 채팅을 통해 제공받으면, 정해진 json 형식에 맞게 데이터를 출력한다.
   인간 관리자의 수고를 덜기 위해서 네가 도움을 주는 것이기 때문에 잘못되거나 불완전한 데이터라면 오히려 관리자에게 피해가 되니, 차라리 넣지 않는게 옳다.
   해당 데이터는 카카오톡이라는 채팅 어플의 캡쳐본을 OCR을 통해 추출한 텍스트 데이터라서, 카카오톡 서비스는 채팅을 수신한 시간이 찍히기 때문에 OCR에 가끔 수신한 시간이 같이 추출되기도 한다.
   이는 유동적으로 변할 수 있기 때문에, 해당 데이터는 무시하고, 채팅 내용만을 분석하여 json 형식에 맞게 데이터를 출력해야 한다.
@@ -37,9 +37,6 @@ class AITextOrderService(
     "start_load_address": "string",
     "end_load_address": "string",
     "description": "string"
-    "truck_type": "string",
-    "truck_weight": "string",
-    "phone_number": "string",
     "start_load_time": "LocalDateTime",
     "end_load_time": "LocalDateTime",
   } 
@@ -47,7 +44,7 @@ class AITextOrderService(
   다음은, 트럭 운송에 대한 러프한 정보다. 
   만약 운송이 여러개일 경우 모든 정보를 여러개의 json에 걸쳐 출력해야 한다.
   
-  #### 채팅을 통해 수집한 트럭 운송 정보 ####
+  #### 채팅을 통해 수집한 배달 정보 ####
                     """.trimIndent()
             .plus(ocrTextResponse!!.mapToText())
 
@@ -75,8 +72,6 @@ data class GptOrderResponseDTO @JsonCreator constructor(
     @JsonProperty("start_load_address") val startLoadAddress: String,
     @JsonProperty("end_load_address") val endLoadAddress: String,
     @JsonProperty("description") val description: String,
-    @JsonProperty("truck_type") val truckType: String,
-    @JsonProperty("truck_weight") val truckWeight: String,
     @JsonProperty("phone_number") val phoneNumber: String,
     @JsonProperty("start_load_time") val startLoadTime: LocalDateTime,
     @JsonProperty("end_load_time") val endLoadTime: LocalDateTime
@@ -86,8 +81,6 @@ data class GptOrderResponseDTO @JsonCreator constructor(
             startLoadAddress = startLoadAddress,
             endLoadAddress = endLoadAddress,
             description = description,
-            truckType = truckType,
-            truckWeight = truckWeight,
             phoneNumber = phoneNumber,
             startLoadTime = startLoadTime,
             endLoadTime = endLoadTime
