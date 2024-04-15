@@ -1,6 +1,7 @@
 package minlab.imageorder.order.presentation
 
 import minlab.imageorder.common.ResultDTO
+import minlab.imageorder.common.logInfo
 import minlab.imageorder.order.application.*
 import minlab.imageorder.order.domain.OrderRepository
 import org.springframework.http.ResponseEntity
@@ -17,13 +18,14 @@ class RegisterOrderController(
     @PostMapping("/register/image-order")
     suspend fun getTextOrder(@RequestBody registerDTO: RegisterDTO): ResponseEntity<ResultDTO> {
         val ocrImageRequestDTO = OCRImageRequestDTO(
-            timestamp = registerDTO.timestamp,
+            timestamp = System.currentTimeMillis().toString(),
             images = listOf(
                 Image(url = registerDTO.orderImageUrl)
             )
         )
 
         val ocrTextResponse: OCRTextResponseDTO? = naverOcrService.convertImageToText(ocrImageRequestDTO)
+        logInfo("ocrTextResponse : $ocrTextResponse")
         val generateOrder = aiTextOrderService.generateOrder(ocrTextResponse)
 
         orderRepository.save(generateOrder.mapToDomain())
@@ -39,5 +41,4 @@ class RegisterOrderController(
 
 data class RegisterDTO(
     val orderImageUrl: String,
-    val timestamp: String
 )

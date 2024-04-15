@@ -72,7 +72,6 @@ data class GptOrderResponseDTO @JsonCreator constructor(
     @JsonProperty("start_load_address") val startLoadAddress: String,
     @JsonProperty("end_load_address") val endLoadAddress: String,
     @JsonProperty("description") val description: String,
-    @JsonProperty("phone_number") val phoneNumber: String,
     @JsonProperty("start_load_time") val startLoadTime: LocalDateTime,
     @JsonProperty("end_load_time") val endLoadTime: LocalDateTime
 ) {
@@ -81,7 +80,6 @@ data class GptOrderResponseDTO @JsonCreator constructor(
             startLoadAddress = startLoadAddress,
             endLoadAddress = endLoadAddress,
             description = description,
-            phoneNumber = phoneNumber,
             startLoadTime = startLoadTime,
             endLoadTime = endLoadTime
         )
